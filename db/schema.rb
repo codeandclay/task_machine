@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_220746) do
+ActiveRecord::Schema.define(version: 2020_01_25_224627) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 2020_01_25_220746) do
     t.uuid "creator_id"
     t.index ["creator_type", "creator_id"], name: "index_task_lists_on_creator_type_and_creator_id"
     t.index ["title"], name: "index_task_lists_on_title"
+  end
+
+  create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "title", null: false
+    t.text "notes", default: ""
+    t.boolean "is_complete", default: false
+    t.uuid "task_list_id"
+    t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
