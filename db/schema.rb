@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_233234) do
+ActiveRecord::Schema.define(version: 2020_01_25_234425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 2020_01_25_233234) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title", null: false
     t.text "notes", default: ""
-    t.boolean "is_complete", default: false
     t.uuid "task_list_id"
     t.string "fulfiller_type"
     t.uuid "fulfiller_id"
