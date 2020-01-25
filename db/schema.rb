@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_234425) do
+ActiveRecord::Schema.define(version: 2020_01_25_235113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2020_01_25_234425) do
     t.uuid "task_list_id"
     t.string "fulfiller_type"
     t.uuid "fulfiller_id"
+    t.datetime "completed_at", precision: 6
     t.index ["fulfiller_type", "fulfiller_id"], name: "index_tasks_on_fulfiller_type_and_fulfiller_id"
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
   end
