@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_125532) do
+ActiveRecord::Schema.define(version: 2020_01_26_164428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 2020_01_26_125532) do
     t.datetime "completed_at", precision: 6
     t.index ["fulfiller_type", "fulfiller_id"], name: "index_tasks_on_fulfiller_type_and_fulfiller_id"
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
+  end
+
+  create_table "user_connections", id: false, force: :cascade do |t|
+    t.uuid "setter_id", null: false
+    t.uuid "available_assignee_id", null: false
+    t.index ["available_assignee_id"], name: "index_user_connections_on_available_assignee_id"
+    t.index ["setter_id"], name: "index_user_connections_on_setter_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
