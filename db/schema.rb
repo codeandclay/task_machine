@@ -40,10 +40,8 @@ ActiveRecord::Schema.define(version: 2020_01_26_204702) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "title", null: false
     t.text "notes", default: ""
-    t.string "creator_type"
     t.uuid "creator_id"
-    t.index ["creator_type", "creator_id"], name: "index_task_lists_on_creator_type_and_creator_id"
-    t.index ["title"], name: "index_task_lists_on_title"
+    t.index ["creator_id"], name: "index_task_lists_on_creator_id"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -52,10 +50,9 @@ ActiveRecord::Schema.define(version: 2020_01_26_204702) do
     t.string "title", null: false
     t.text "notes", default: ""
     t.uuid "task_list_id"
-    t.string "fulfiller_type"
     t.uuid "fulfiller_id"
     t.datetime "completed_at", precision: 6
-    t.index ["fulfiller_type", "fulfiller_id"], name: "index_tasks_on_fulfiller_type_and_fulfiller_id"
+    t.index ["fulfiller_id"], name: "index_tasks_on_fulfiller_id"
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
   end
 
