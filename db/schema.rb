@@ -10,11 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_235113) do
+ActiveRecord::Schema.define(version: 2020_01_26_125532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "assignees_task_list", id: false, force: :cascade do |t|
+    t.bigint "assignee_id", null: false
+    t.bigint "task_list_id", null: false
+    t.index ["assignee_id"], name: "index_assignees_task_list_on_assignee_id"
+    t.index ["task_list_id"], name: "index_assignees_task_list_on_task_list_id"
+  end
 
   create_table "task_lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
