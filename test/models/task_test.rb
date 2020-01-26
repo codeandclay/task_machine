@@ -10,12 +10,12 @@ class TaskTest < ActiveSupport::TestCase
   test 'a test can be fulfilled by somebody' do
     @task.fulfiller = @user
 
-    assert @task.fulfiller_id == @user.id
+    assert_equal @user.id, @task.fulfiller_id
   end
 
   test 'a user can have fulfilled tasks' do
     @task.update(fulfiller: @user)
 
-    assert @user.fulfilled_tasks.size == 1
+    assert_equal 1, @user.fulfilled_tasks.size
   end
 end

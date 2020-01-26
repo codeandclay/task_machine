@@ -13,7 +13,7 @@ class TaskListTest < ActiveSupport::TestCase
     original_list_count = @user.task_lists.size
 
     @user.task_lists.create(title: 'Test List')
-    assert @user.task_lists.size == original_list_count + 1
+    assert_equal original_list_count + 1, @user.task_lists.size
   end
 
   test 'a user can create many task lists' do
@@ -24,13 +24,13 @@ class TaskListTest < ActiveSupport::TestCase
       @user.task_lists.create(title: "Test List #{i}")
     end
 
-    assert @user.task_lists.size == original_list_count + new_task_list_count
+    assert_equal original_list_count + new_task_list_count, @user.task_lists.size
   end
 
   test 'a task list has a creator' do
     @user.task_lists.create(title: 'Test List')
 
-    assert TaskList.first.creator_id == @user.id
+    assert_equal @user.id, TaskList.first.creator_id
   end
 
   test 'a task list can have many tasks' do
@@ -41,25 +41,25 @@ class TaskListTest < ActiveSupport::TestCase
       @task_list.tasks.create(title: "Test Task #{i}")
     end
 
-    assert @task_list.tasks.size == original_task_count + new_task_count
+    assert_equal original_task_count + new_task_count, @task_list.tasks.size
   end
 
   test 'a task has a list' do
     task = @task_list.tasks.create(title: 'Test Task')
 
-    assert task.task_list_id == @task_list.id
+    assert_equal @task_list.id, task.task_list_id
   end
 
   test 'a task list can have an assignee' do
     @task_list.assignees << @user
 
-    assert @task_list.assignees.first.id == @user.id
+    assert_equal @user.id, @task_list.assignees.first.id
   end
 
   test 'a user has assigned task lists' do
     @task_list.assignees << @user
 
-    assert @user.assigned_task_lists.first.id == @task_list.id
+    assert_equal @task_list.id, @user.assigned_task_lists.first.id
   end
 
   test 'a task list has many assignees' do
@@ -67,6 +67,6 @@ class TaskListTest < ActiveSupport::TestCase
       @task_list.assignees << user
     end
 
-    assert @task_list.assignees.size == @assignee_users.size
+    assert_equal @assignee_users.size, @task_list.assignees.size
   end
 end
