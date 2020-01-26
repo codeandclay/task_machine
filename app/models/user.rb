@@ -15,6 +15,10 @@ class User < ApplicationRecord
   has_many :assignee_connections, class_name: 'UserConnection', foreign_key: 'available_assignee_id'
   has_many :task_setters, through: :assignee_connections, source: :setter
 
+  # A setter can invite users to become assignees
+  has_many :sent_invitations, class_name:  'Invitation', foreign_key: 'sender_id'
+  has_many :received_invitations, class_name:  'Invitation', foreign_key: 'recipient_id'
+
   def connect_with_assignee(assignee)
     available_assignees << assignee
   end
