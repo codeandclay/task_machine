@@ -4,7 +4,7 @@ class CreateTaskLists < ActiveRecord::Migration[6.0]
       t.timestamps null: false
       t.string :title, null: false, index: true
       t.text :notes, default: ''
-      t.belongs_to :creator, type: :uuid, polymorphic: true
+      t.belongs_to :creator, type: :uuid
     end
   end
 end
