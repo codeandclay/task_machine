@@ -3,7 +3,7 @@ require 'test_helper'
 class TaskListTest < ActiveSupport::TestCase
   setup do
     @user = User.create(email: 'test_user@example.com', password: 'password')
-    @assignee_users = 10.times do |i|
+    @assignee_users = (0..10).map do |i|
       User.create(email: "test_user_#{i}@example.com", password: 'password')
     end
     @task_list = @user.task_lists.create(title: 'Test List')
@@ -50,9 +50,23 @@ class TaskListTest < ActiveSupport::TestCase
     assert task.task_list_id == @task_list.id
   end
 
-  test 'a task list has assignees' do
-    # A task list has many assignees.
-    # An assignee can have many task lists.
-    assert false
+  test 'a task list can have an assignee' do
+    @task_list.assignees << @user
+
+    assert @task_list.assignees.first.id == @user.id
+  end
+
+  test 'a user has assigned task lists' do
+    @task_list.assignees << @user
+
+    assert @user.assigned_task_lists.first.id == @task_list.id
+  end
+
+  test 'a task list has many assignees' do
+    @assignee_users.each do |user|
+      @task_list.assignees << user
+    end
+
+    assert @task_list.assignees.size == @assignee_users.size
   end
 end
