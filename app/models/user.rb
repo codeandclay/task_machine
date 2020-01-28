@@ -19,6 +19,10 @@ class User < ApplicationRecord
   has_many :sent_invitations, class_name:  'Invitation', foreign_key: 'sender_id'
   has_many :received_invitations, class_name:  'Invitation', foreign_key: 'recipient_id'
 
+  # Users can send eachother messages
+  has_many :sent_messages, class_name: 'DirectMessage', foreign_key: 'sender_id'
+  has_many :received_messages, class_name: 'DirectMessage', foreign_key: 'recipient_id'
+
   def connect_with_assignee(assignee)
     available_assignees << assignee
   end

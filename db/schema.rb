@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_26_204702) do
+ActiveRecord::Schema.define(version: 2020_01_26_225613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -21,6 +21,17 @@ ActiveRecord::Schema.define(version: 2020_01_26_204702) do
     t.uuid "task_list_id", null: false
     t.index ["assignee_id"], name: "index_assignees_task_lists_on_assignee_id"
     t.index ["task_list_id"], name: "index_assignees_task_lists_on_task_list_id"
+  end
+
+  create_table "direct_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.uuid "sender_id", null: false
+    t.uuid "recipient_id", null: false
+    t.datetime "read_at"
+    t.text "body", null: false
+    t.index ["recipient_id"], name: "index_direct_messages_on_recipient_id"
+    t.index ["sender_id"], name: "index_direct_messages_on_sender_id"
   end
 
   create_table "invitations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
